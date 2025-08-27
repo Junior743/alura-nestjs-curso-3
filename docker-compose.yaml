@@ -8,9 +8,9 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
+      - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     networks:
       - postgres
     restart: unless-stopped
@@ -21,15 +21,24 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${DB_ADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "8081:80"
+      - '8081:80'
     depends_on:
       - postgres
     networks:
       - postgres
+
+  redis:
+    container_name: redis-cache
+    image: redis:7.0-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis:/data
 
 networks:
   postgres:
     driver: bridge
 
 volumes:
-    postgres:
+  postgres:
+  redis:

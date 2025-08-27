@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 
-import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
-import { CriaProdutoDTO } from './dto/CriaProduto.dto';
 import { ProdutoService } from './produto.service';
+import { CriaProdutoDTO } from './dto/CriaProduto.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
 
 @Controller('produtos')
 export class ProdutoController {
@@ -18,19 +20,37 @@ export class ProdutoController {
 
   @Post()
   async criaNovo(@Body() dadosProduto: CriaProdutoDTO) {
-    const produtoCadastrado = await this.produtoService.criaProduto(
-      dadosProduto,
-    );
+    try {
+      const produtoCadastrado = await this.produtoService.criaProduto(
+        dadosProduto,
+      );
 
-    return {
-      mensagem: 'Produto criado com sucesso.',
-      produto: produtoCadastrado,
-    };
+      console.log(`Produto cadastrado: ${JSON.stringify(produtoCadastrado)}`);
+
+      return {
+        mensagem: 'Produto criado com sucesso.',
+        produto: produtoCadastrado,
+      };
+    } catch (ex: any) {
+      console.error(`Erro ao criar produto: ${ex}`);
+      throw ex;
+    }
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async listaTodos() {
     return this.produtoService.listProdutos();
+  }
+
+  @Get('/:id')
+  @UseInterceptors(CacheInterceptor)
+  async listaUm(@Param('id') id: string) {
+    const produtoSalvo = await this.produtoService.listaUmProduto(id);
+
+    console.log('Produto sendo buscado do BD!');
+
+    return produtoSalvo;
   }
 
   @Put('/:id')

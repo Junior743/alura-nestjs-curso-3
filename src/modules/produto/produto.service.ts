@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ListaProdutoDTO } from './dto/ListaProduto.dto';
-import { ProdutoEntity } from './produto.entity';
 import { Repository } from 'typeorm';
-import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
+import { Injectable } from '@nestjs/common';
+import { ProdutoEntity } from './produto.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
+import { ListaProdutoDTO } from './dto/ListaProduto.dto';
+import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
 
 @Injectable()
 export class ProdutoService {
@@ -16,14 +16,15 @@ export class ProdutoService {
   async criaProduto(dadosProduto: CriaProdutoDTO) {
     const produtoEntity = new ProdutoEntity();
 
+    console.log(`dadosProduto: ${JSON.stringify(dadosProduto)}`);
     produtoEntity.nome = dadosProduto.nome;
     produtoEntity.valor = dadosProduto.valor;
-    produtoEntity.usuarioId = dadosProduto.usuarioId;
     produtoEntity.quantidadeDisponivel = dadosProduto.quantidadeDisponivel;
     produtoEntity.descricao = dadosProduto.descricao;
     produtoEntity.categoria = dadosProduto.categoria;
     produtoEntity.caracteristicas = dadosProduto.caracteristicas;
     produtoEntity.imagens = dadosProduto.imagens;
+    console.log(`produtoEntity: ${JSON.stringify(produtoEntity)}`);
 
     return this.produtoRepository.save(produtoEntity);
   }
@@ -35,6 +36,7 @@ export class ProdutoService {
         caracteristicas: true,
       },
     });
+    console.log('produtosSalvos: ', produtosSalvos);
     const produtosLista = produtosSalvos.map(
       (produto) =>
         new ListaProdutoDTO(
@@ -45,6 +47,26 @@ export class ProdutoService {
         ),
     );
     return produtosLista;
+  }
+
+  async listaUmProduto(id: string) {
+    const produtoSalvo = await this.produtoRepository.findOne({
+      where: { id },
+      relations: {
+        imagens: true,
+        caracteristicas: true,
+      },
+    });
+
+    return (
+      produtoSalvo &&
+      new ListaProdutoDTO(
+        produtoSalvo.id,
+        produtoSalvo.nome,
+        produtoSalvo.caracteristicas,
+        produtoSalvo.imagens,
+      )
+    );
   }
 
   async atualizaProduto(id: string, novosDados: AtualizaProdutoDTO) {

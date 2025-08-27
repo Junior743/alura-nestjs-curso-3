@@ -2,28 +2,25 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
+  IsDecimal,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
-  IsUUID,
   Min,
   ValidateNested,
 } from 'class-validator';
 import { CaracteristicaProdutoDTO, ImagemProdutoDTO } from './CriaProduto.dto';
 
 export class AtualizaProdutoDTO {
-  @IsUUID(undefined, { message: 'ID de usuário inválido' })
-  usuarioId: string;
-
   @IsString()
   @IsNotEmpty({ message: 'Nome do produto não pode ser vazio' })
   @IsOptional()
   nome: string;
 
-  @IsNumber({ maxDecimalPlaces: 2, allowNaN: false, allowInfinity: false })
+  @IsDecimal({ maxDecimalPlaces: 2, allowNaN: false, allowInfinity: false })
   @IsOptional()
-  @Min(1, { message: 'O valor precisa ser maior que zero' })
+  @Min(1, { message: 'O valor precisa ser maior ou igual a um' })
   @IsOptional()
   valor: number;
 
