@@ -2,7 +2,6 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
-  IsDecimal,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -18,8 +17,11 @@ export class AtualizaProdutoDTO {
   @IsOptional()
   nome: string;
 
-  @IsDecimal({ maxDecimalPlaces: 2, allowNaN: false, allowInfinity: false })
-  @IsOptional()
+  @Type(() => Number)
+  @IsNumber(
+    { maxDecimalPlaces: 2, allowNaN: false, allowInfinity: false },
+    { message: 'Valor do produto inválido' },
+  )
   @Min(1, { message: 'O valor precisa ser maior ou igual a um' })
   @IsOptional()
   valor: number;

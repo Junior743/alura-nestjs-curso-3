@@ -2,7 +2,6 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
-  IsDecimal,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -45,7 +44,11 @@ export class CriaProdutoDTO {
   @IsNotEmpty({ message: 'Nome do produto não pode ser vazio' })
   nome: string;
 
-  @IsDecimal({ maxDecimalPlaces: 2, allowNaN: false, allowInfinity: false })
+  @Type(() => Number)
+  @IsNumber(
+    { maxDecimalPlaces: 2, allowNaN: false, allowInfinity: false },
+    { message: 'Valor do produto inválido' },
+  )
   @Min(1, { message: 'O valor precisa ser maior que zero' })
   valor: number;
 
