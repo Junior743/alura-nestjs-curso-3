@@ -3,20 +3,29 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 
+import { Cache } from 'cache-manager';
 import { ProdutoService } from './produto.service';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { ListaProdutoDTO } from './dto/ListaProduto.dto';
 import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
+import { AutenticacaoGuard } from '../autenticacao/autenticacao.guard';
+import { CACHE_MANAGER, CacheInterceptor } from '@nestjs/cache-manager';
 
+@UseGuards(AutenticacaoGuard)
 @Controller('produtos')
 export class ProdutoController {
-  constructor(private readonly produtoService: ProdutoService) {}
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly produtoService: ProdutoService,
+  ) {}
 
   @Post()
   async criaNovo(@Body() dadosProduto: CriaProdutoDTO) {
@@ -46,11 +55,18 @@ export class ProdutoController {
   @Get('/:id')
   @UseInterceptors(CacheInterceptor)
   async listaUm(@Param('id') id: string) {
-    const produtoSalvo = await this.produtoService.listaUmProduto(id);
+    const productCacheID = `produto_${id}`;
+    let produto = await this.cacheManager.get<ListaProdutoDTO>(productCacheID);
 
-    console.log('Produto sendo buscado do BD!');
+    if (!produto) {
+      produto = await this.produtoService.listaUmProduto(id);
+      await this.cacheManager.set(productCacheID, produto);
+    }
 
-    return produtoSalvo;
+    return {
+      mensagem: 'Produto encontrado.',
+      produto,
+    };
   }
 
   @Put('/:id')

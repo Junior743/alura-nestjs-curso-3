@@ -49,7 +49,7 @@ export class ProdutoService {
     return produtosLista;
   }
 
-  async listaUmProduto(id: string) {
+  async listaUmProduto(id: string): Promise<ListaProdutoDTO | null> {
     const produtoSalvo = await this.produtoRepository.findOne({
       where: { id },
       relations: {
