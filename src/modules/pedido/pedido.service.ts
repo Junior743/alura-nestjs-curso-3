@@ -111,12 +111,35 @@ export class PedidoService {
       },
       relations: {
         usuario: true,
+        itensPedido: { produto: true },
+      },
+      select: {
+        id: true,
+        status: true,
+        valorTotal: true,
+        itensPedido: {
+          id: true,
+          quantidade: true,
+          precoVenda: true,
+          produto: {
+            id: true,
+            nome: true,
+            valor: true,
+          },
+        },
+        usuario: {
+          id: true,
+          nome: true,
+        },
       },
     });
   }
 
-  async atualizaPedido(id: string, dto: AtualizaPedidoDto) {
-    const pedido = await this.pedidoRepository.findOneBy({ id });
+  async atualizaPedido(usuarioId: string, id: string, dto: AtualizaPedidoDto) {
+    const pedido = await this.pedidoRepository.findOneBy({
+      id,
+      usuario: { id: usuarioId },
+    });
 
     if (pedido === null)
       throw new NotFoundException('O pedido não foi encontrado.');
