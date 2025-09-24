@@ -1,14 +1,19 @@
 import { ConfigModule } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import {
+  ClassSerializerInterceptor,
+  ConsoleLogger,
+  Module,
+} from '@nestjs/common';
 
 import { PedidoModule } from './modules/pedido/pedido.module';
 import { ProdutoModule } from './modules/produto/produto.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
 import { PostgresConfigService } from './config/postgres.config.service';
+import { FiltroDeExcecaoGlobal } from './filters/filtro-de-excecao-global';
 import { AutenticacaoModule } from './modules/autenticacao/autenticacao.module';
 
 @Module({
@@ -29,9 +34,14 @@ import { AutenticacaoModule } from './modules/autenticacao/autenticacao.module';
   ],
   providers: [
     {
+      provide: APP_FILTER,
+      useClass: FiltroDeExcecaoGlobal,
+    },
+    {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
     },
+    ConsoleLogger,
   ],
 })
 export class AppModule {}
