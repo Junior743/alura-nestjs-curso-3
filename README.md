@@ -29,6 +29,23 @@ Forked from [alura-cursos/nestjs-curso-3](https://github.com/alura-cursos/nestjs
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Sobre o NestJS
+
+Nest (NestJS) é um framework para construir aplicações server-side em Node.js de forma eficiente e escalável. Ele utiliza JavaScript progressivo, é desenvolvido com e possui total suporte a TypeScript (mas ainda permite que desenvolvedores codifiquem em JavaScript puro) e combina elementos de POO (Programação Orientada a Objetos), PF (Programação Funcional) e PRF (Programação Reativa Funcional).
+
+Por baixo dos panos, o Nest faz uso de frameworks robustos de servidor HTTP como o Express (padrão) e, opcionalmente, pode ser configurado para usar o Fastify também!
+
+O Nest fornece um nível de abstração acima desses frameworks comuns do Node.js (Express/Fastify), mas também expõe suas APIs diretamente para o desenvolvedor. Isso dá liberdade para utilizar a infinidade de módulos de terceiros disponíveis para a plataforma subjacente.
+
+## Filosofia NestJS
+
+Nos últimos anos, graças ao Node.js, o JavaScript se tornou a “linguagem franca” da web tanto para aplicações frontend quanto backend. Isso possibilitou o surgimento de projetos incríveis como Angular, React e Vue, que aumentam a produtividade dos desenvolvedores e permitem a criação de aplicações frontend rápidas, testáveis e extensíveis.  
+
+No entanto, embora existam várias bibliotecas, helpers e ferramentas excelentes para Node (e para o JavaScript no lado do servidor), nenhuma delas resolve de forma eficaz o principal problema: a **arquitetura**.
+
+O Nest fornece uma arquitetura pronta para uso que permite que desenvolvedores e equipes criem aplicações altamente testáveis, escaláveis, fracamente acopladas e de fácil manutenção. Sua arquitetura é fortemente inspirada no Angular.
+
+
 ## Installation
 
 ```bash
