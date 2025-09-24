@@ -127,10 +127,7 @@ export class PedidoService {
             valor: true,
           },
         },
-        usuario: {
-          id: true,
-          nome: true,
-        },
+        usuario: true,
       },
     });
   }
