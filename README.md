@@ -29,21 +29,19 @@ Forked from [alura-cursos/nestjs-curso-3](https://github.com/alura-cursos/nestjs
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Sobre o NestJS
+## About NestJS
 
-Nest (NestJS) é um framework para construir aplicações server-side em Node.js de forma eficiente e escalável. Ele utiliza JavaScript progressivo, é desenvolvido com e possui total suporte a TypeScript (mas ainda permite que desenvolvedores codifiquem em JavaScript puro) e combina elementos de POO (Programação Orientada a Objetos), PF (Programação Funcional) e PRF (Programação Reativa Funcional).
+Nest (NestJS) is a framework for building efficient, scalable Node.js server-side applications. It uses progressive JavaScript, is built with and fully supports TypeScript (yet still enables developers to code in pure JavaScript) and combines elements of OOP (Object Oriented Programming), FP (Functional Programming), and FRP (Functional Reactive Programming).
 
-Por baixo dos panos, o Nest faz uso de frameworks robustos de servidor HTTP como o Express (padrão) e, opcionalmente, pode ser configurado para usar o Fastify também!
+Under the hood, Nest makes use of robust HTTP Server frameworks like Express (the default) and optionally can be configured to use Fastify as well!
 
-O Nest fornece um nível de abstração acima desses frameworks comuns do Node.js (Express/Fastify), mas também expõe suas APIs diretamente para o desenvolvedor. Isso dá liberdade para utilizar a infinidade de módulos de terceiros disponíveis para a plataforma subjacente.
+Nest provides a level of abstraction above these common Node.js frameworks (Express/Fastify), but also exposes their APIs directly to the developer. This gives developers the freedom to use the myriad of third-party modules which are available for the underlying platform.
 
-## Filosofia NestJS
+## NestJS Philosophy
 
-Nos últimos anos, graças ao Node.js, o JavaScript se tornou a “linguagem franca” da web tanto para aplicações frontend quanto backend. Isso possibilitou o surgimento de projetos incríveis como Angular, React e Vue, que aumentam a produtividade dos desenvolvedores e permitem a criação de aplicações frontend rápidas, testáveis e extensíveis.  
+In recent years, thanks to Node.js, JavaScript has become the “lingua franca” of the web for both front and backend applications. This has given rise to awesome projects like Angular, React and Vue, which improve developer productivity and enable the creation of fast, testable, and extensible frontend applications. However, while plenty of superb libraries, helpers, and tools exist for Node (and server-side JavaScript), none of them effectively solve the main problem of architecture.
 
-No entanto, embora existam várias bibliotecas, helpers e ferramentas excelentes para Node (e para o JavaScript no lado do servidor), nenhuma delas resolve de forma eficaz o principal problema: a **arquitetura**.
-
-O Nest fornece uma arquitetura pronta para uso que permite que desenvolvedores e equipes criem aplicações altamente testáveis, escaláveis, fracamente acopladas e de fácil manutenção. Sua arquitetura é fortemente inspirada no Angular.
+Nest provides an out-of-the-box application architecture which allows developers and teams to create highly testable, scalable, loosely coupled, and easily maintainable applications. The architecture is heavily inspired by Angular
 
 
 ## Installation
@@ -81,12 +79,6 @@ $ npm run test:cov
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
