@@ -15,6 +15,7 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
 import { PostgresConfigService } from './config/postgres.config.service';
 import { FiltroDeExcecaoGlobal } from './filters/filtro-de-excecao-global';
 import { AutenticacaoModule } from './modules/autenticacao/autenticacao.module';
+import { GlobalLoggerInterceptor } from './resources/interceptors/global-logger/global-logger.interceptor';
 
 @Module({
   imports: [
@@ -40,6 +41,10 @@ import { AutenticacaoModule } from './modules/autenticacao/autenticacao.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: GlobalLoggerInterceptor,
     },
     ConsoleLogger,
   ],

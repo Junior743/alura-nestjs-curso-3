@@ -18,6 +18,7 @@ import { ListaProdutoDTO } from './dto/ListaProduto.dto';
 import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
 import { AutenticacaoGuard } from '../autenticacao/autenticacao.guard';
 import { CACHE_MANAGER, CacheInterceptor } from '@nestjs/cache-manager';
+import { CustomLoggerService } from '../customLogger/custom-logger.service';
 
 @UseGuards(AutenticacaoGuard)
 @Controller('produtos')
@@ -25,7 +26,10 @@ export class ProdutoController {
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly produtoService: ProdutoService,
-  ) {}
+    private readonly customLoggerService: CustomLoggerService,
+  ) {
+    this.customLoggerService.setContext('ProdutoController');
+  }
 
   @Post()
   async criaNovo(@Body() dadosProduto: CriaProdutoDTO) {
@@ -34,7 +38,8 @@ export class ProdutoController {
         dadosProduto,
       );
 
-      console.log(`Produto cadastrado: ${JSON.stringify(produtoCadastrado)}`);
+      this.customLoggerService.logEmArquivo(produtoCadastrado);
+      this.customLoggerService.logColorido(produtoCadastrado);
 
       return {
         mensagem: 'Produto criado com sucesso.',
