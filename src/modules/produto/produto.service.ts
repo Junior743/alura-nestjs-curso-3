@@ -36,7 +36,6 @@ export class ProdutoService {
         caracteristicas: true,
       },
     });
-    console.log('produtosSalvos: ', produtosSalvos);
     const produtosLista = produtosSalvos.map(
       (produto) =>
         new ListaProdutoDTO(
@@ -46,6 +45,7 @@ export class ProdutoService {
           produto.imagens,
         ),
     );
+
     return produtosLista;
   }
 
